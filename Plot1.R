@@ -1,0 +1,12 @@
+library (dplyr)  
+classes=c("character", "character", "numeric")
+data1<-tbl_df(read.table("household_power_consumption.txt", header=TRUE, sep=";", na.strings="?", colClasses=classes)[,1:3])
+data1<-select(data1, Date, Global_active_power)
+data1$Date<-as.Date(data1$Date)
+data1_subset<-filter(data1, Date== as.Date("01-02-2007") | Date== as.Date("02-02-2007"))
+rm(data1)
+png(filename="plot1.png", width = 480, height = 480, units = "px")
+hist(data1_subset$Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
+dev.off()
+rm(data1_subset)
+
